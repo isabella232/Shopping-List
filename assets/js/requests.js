@@ -27,7 +27,6 @@ $(document).ready(function() {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            is_completed: false,
             title: $("#to-do-input").val()
           })
         })
