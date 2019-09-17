@@ -35,10 +35,10 @@ $(document).ready(function() {
             return response.json();
           })
           .then(response => {
-			let new_item = box_top + $("#to-do-input").val() + box_middle;
+            let new_item = box_top + $("#to-do-input").val() + box_middle;
             new_item += `<div class="danger button is-danger is-small" data-id=${response.name}>Delete</div>`;
-			new_item += box_bottom;
-			
+            new_item += box_bottom;
+
             $("#to-do-items").append(new_item);
             $("#to-do-input").val("");
 
@@ -55,7 +55,7 @@ $(document).ready(function() {
     })
     .then(response => {
       for (let to_do in response) {
-		  console.log(response)
+        console.log(response);
         let new_item = box_top + response[to_do].title + box_middle;
         new_item += `<div class="danger button is-danger is-small" data-id=${to_do}>Delete</div>`;
         new_item += box_bottom;
