@@ -35,16 +35,14 @@ $(document).ready(function() {
             return response.json();
           })
           .then(response => {
-            console.log(response);
-            let new_item = box_top + $("#to-do-input").val() + box_middle;
-            new_item += `<div class="success button is-small" data-id=${response.name}>Check</div>
-				<div class="danger button is-danger is-small" data-id=${response.name}>Delete</div>`;
-            new_item += box_bottom;
+			let new_item = box_top + $("#to-do-input").val() + box_middle;
+            new_item += `<div class="danger button is-danger is-small" data-id=${response.name}>Delete</div>`;
+			new_item += box_bottom;
+			
             $("#to-do-items").append(new_item);
             $("#to-do-input").val("");
 
             remove_items();
-            mark_complete();
           });
       }
     }
@@ -57,13 +55,12 @@ $(document).ready(function() {
     })
     .then(response => {
       for (let to_do in response) {
+		  console.log(response)
         let new_item = box_top + response[to_do].title + box_middle;
-        new_item += `<div class="success button is-small" data-id=${to_do}>Check</div>
-					<div class="danger button is-danger is-small" data-id=${to_do}>Delete</div>`;
+        new_item += `<div class="danger button is-danger is-small" data-id=${to_do}>Delete</div>`;
         new_item += box_bottom;
         $("#to-do-items").append(new_item);
         remove_items();
-        mark_complete();
       }
     });
 });
@@ -72,9 +69,7 @@ const remove_items = () => {
   let fire_base_url = "https://to-do-list-25483.firebaseio.com";
   // Deletes a to do from firebase DELETE
   $(".danger").click(function() {
-    console.log("dqwd");
     let target_id = $(this).data("id");
-    console.log(target_id);
     fetch(`${fire_base_url}/to-dos/${target_id}.json`, {
       method: "DELETE"
     })
@@ -87,29 +82,6 @@ const remove_items = () => {
           .parent()
           .parent()
           .remove();
-      });
-  });
-};
-
-const mark_complete = () => {
-  let fire_base_url = "https://to-do-list-25483.firebaseio.com";
-  // Marks and item as complete PUT
-  $(".success").click(function() {
-    let target_id = $(this).data("id");
-    fetch(`${fire_base_url}/to-dos/${target_id}.json`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        is_completed: true
-      })
-    })
-      .then(response => {
-        return response.json();
-      })
-      .then(response => {
-        $(this).addClass("is-success");
       });
   });
 };
